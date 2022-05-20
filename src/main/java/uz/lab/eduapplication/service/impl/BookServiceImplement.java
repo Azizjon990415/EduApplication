@@ -45,16 +45,33 @@ public class BookServiceImplement implements BookService {
 
     @Override
     public BookDTO saveBook(BookDTO book) {
-        return null;
+        Book book = bookMapper.mapBookDTOToBookDomain(sectionDTO);
+        Book savedBook = bookRepository.save(section);
+        BookDTO savedBookDTO = bookMapper.mapBookDomainToBookDTO(savedBook);
+        return savedBookDTO;
     }
 
     @Override
     public BookDTO editBook(BookDTO book) {
-        return null;
+        boolean exists = bookRepository.existsById(UUID.fromString(bookDTO.getID()));
+        if (exists) {
+            Book book = bookMapper.mapBookDTOToBookDomain(bookDTO);
+            Book savedBook = bookMapper.save(book);
+            BookDTO savedBookDTO = bookMapper.mapBookDomainToBookDTO(savedBook);
+            return savedBookDTO;
+        }else {
+            throw new NullPointerException("I can't find the Book with id"+ bookDTO.getId());
+        }
     }
 
     @Override
     public String deleteBook(UUID id) {
-        return null;
+        boolean exists = bookRepository.existsById(id);
+        if (exists) {
+            bookRepository.deleteById(id);
+            return "Data deleted";
+        }else {
+            throw new NullPointerException("I can not find the Sectione with id" + id);
+        }
     }
 }
