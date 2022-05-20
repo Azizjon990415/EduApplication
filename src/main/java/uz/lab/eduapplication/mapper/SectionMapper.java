@@ -16,16 +16,22 @@ public class SectionMapper {
     BookRepository bookRepository;
     @Autowired
     BookMapper bookMapper;
-    public Section mapSectionDTOToSectionDomain(SectionDTO sectionDTO){
-        Optional<Book> bookOptional = bookRepository.findById(UUID.fromString(sectionDTO.getBookDTO().getId()));
-        if (bookOptional.isPresent()){
-            return new Section(sectionDTO.getNameUz(),sectionDTO.getNameRu(),sectionDTO.getNameEn(),sectionDTO.getActive(), bookOptional.get());
-        }else {
-            return new Section(sectionDTO.getNameUz(),sectionDTO.getNameRu(),sectionDTO.getNameEn(),sectionDTO.getActive(),bookMapper.mapBookDTOToBookDomain(sectionDTO.getBookDTO()));
+
+    public Section mapSectionDTOToSectionDomain(SectionDTO sectionDTO) {
+        Optional<Book> bookOptional;
+        if (sectionDTO.getBookDTO().getId() != null) {
+            bookOptional = bookRepository.findById(UUID.fromString(sectionDTO.getBookDTO().getId()));
+        } else {
+            bookOptional = Optional.empty();
+        }
+        if (bookOptional.isPresent()) {
+            return new Section(sectionDTO.getNameUz(), sectionDTO.getNameRu(), sectionDTO.getNameEn(), sectionDTO.getActive(), bookOptional.get());
+        } else {
+            return new Section(sectionDTO.getNameUz(), sectionDTO.getNameRu(), sectionDTO.getNameEn(), sectionDTO.getActive(), bookMapper.mapBookDTOToBookDomain(sectionDTO.getBookDTO()));
         }
     }
 
-    public SectionDTO mapSectionDomainToSectionDTO(Section section){
+    public SectionDTO mapSectionDomainToSectionDTO(Section section) {
         return new SectionDTO(section.getId().toString(), section.getNameUz(), section.getNameRu(), section.getNameEn(), section.getActive(), bookMapper.mapBookDomainToBookDTO(section.getBook()));
     }
 }

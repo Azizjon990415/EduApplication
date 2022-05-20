@@ -1,6 +1,7 @@
 package uz.lab.eduapplication.service.impl;
 
 import lombok.AllArgsConstructor;
+import org.springframework.stereotype.Service;
 import uz.lab.eduapplication.DTO.SectionDTO;
 import uz.lab.eduapplication.domain.Section;
 import uz.lab.eduapplication.mapper.SectionMapper;
@@ -11,6 +12,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
+@Service
 @AllArgsConstructor
 public class SectionServiceImpl implements SectionService {
     private SectionRepository sectionRepository;
@@ -52,6 +54,7 @@ public class SectionServiceImpl implements SectionService {
         boolean exists = sectionRepository.existsById(UUID.fromString(sectionDTO.getId()));
         if (exists) {
             Section section = sectionMapper.mapSectionDTOToSectionDomain(sectionDTO);
+            section.setId(UUID.fromString(sectionDTO.getId()));
             Section savedSection = sectionRepository.save(section);
             SectionDTO savedSectionDTO = sectionMapper.mapSectionDomainToSectionDTO(savedSection);
             return savedSectionDTO;

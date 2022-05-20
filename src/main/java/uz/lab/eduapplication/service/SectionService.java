@@ -7,7 +7,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
-@Service
+
 public interface SectionService {
     public List<SectionDTO> getAllSections();
     public SectionDTO getOneSection(UUID id);

@@ -4,6 +4,7 @@ import lombok.*;
 import org.hibernate.Hibernate;
 import uz.lab.eduapplication.domain.template.AbstractDomain;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.ManyToOne;
@@ -24,7 +25,7 @@ public class Section extends AbstractDomain {
     private String nameEn;
     @Column
     private Boolean active;
-    @ManyToOne
+    @ManyToOne(cascade = {CascadeType.PERSIST,CascadeType.REMOVE,CascadeType.MERGE})
     private Book book;
 
     @Override

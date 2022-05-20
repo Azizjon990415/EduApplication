@@ -24,12 +24,6 @@ import java.util.Objects;
         @ManyToOne
         private Test test;
 
-        public Answer(String isCorrect, String text, Test test) {
-            this.isCorrect = isCorrect;
-            this.text = text;
-            this.test = test;
-        }
-
         @Override
         public boolean equals(Object o) {
             if (this == o) return true;
