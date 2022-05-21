@@ -3,6 +3,7 @@ package uz.lab.eduapplication.domain;
 import lombok.*;
 import org.hibernate.Hibernate;
 import uz.lab.eduapplication.domain.template.AbstractDomain;
+import uz.lab.eduapplication.service.impl.QuestionDTO;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -26,5 +27,11 @@ public class Question extends AbstractDomain {
     @Override
     public int hashCode() {
         return getClass().hashCode();
+    }
+
+    public Object getScore() {
+    }
+
+    public QuestionDTO getQuestion() {
     }
 }

@@ -3,10 +3,6 @@ package uz.lab.eduapplication.DTO;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import uz.lab.eduapplication.domain.Section;
-
-import javax.persistence.Column;
-import javax.persistence.ManyToOne;
 
 @Data
 @AllArgsConstructor
