@@ -23,7 +23,7 @@ public class BookServiceImplement implements BookService {
     @Override
     public List<BookDTO> getAllBooks() {
         List<Book> books = bookRepository.findAll();
-        List<Book> bookDTOS = new ArrayList<>();
+        List<BookDTO> bookDTOS = new ArrayList<>();
         books.forEach(book -> {
             BookDTO bookDTO = bookMapper.mapBookDomainToBookDTO(book);
             bookDTOS.add(bookDTO);
@@ -44,19 +44,19 @@ public class BookServiceImplement implements BookService {
     }
 
     @Override
-    public BookDTO saveBook(BookDTO book) {
-        Book book = bookMapper.mapBookDTOToBookDomain(sectionDTO);
-        Book savedBook = bookRepository.save(section);
+    public BookDTO saveBook(BookDTO bookDTO) {
+        Book book = bookMapper.mapBookDTOToBookDomain(bookDTO);
+        Book savedBook = bookRepository.save(book);
         BookDTO savedBookDTO = bookMapper.mapBookDomainToBookDTO(savedBook);
         return savedBookDTO;
     }
 
     @Override
-    public BookDTO editBook(BookDTO book) {
-        boolean exists = bookRepository.existsById(UUID.fromString(bookDTO.getID()));
+    public BookDTO editBook(BookDTO bookDTO) {
+        boolean exists = bookRepository.existsById(UUID.fromString(bookDTO.getId()));
         if (exists) {
             Book book = bookMapper.mapBookDTOToBookDomain(bookDTO);
-            Book savedBook = bookMapper.save(book);
+            Book savedBook = bookRepository.save(book);
             BookDTO savedBookDTO = bookMapper.mapBookDomainToBookDTO(savedBook);
             return savedBookDTO;
         }else {

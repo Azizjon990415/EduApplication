@@ -6,7 +6,7 @@ import uz.lab.eduapplication.DTO.BookDTO;
 import java.util.List;
 import java.util.UUID;
 
-@Service
+
 public interface BookService {
     public List<BookDTO> getAllBooks();
     public BookDTO getOneBook(UUID id);

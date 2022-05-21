@@ -1,14 +1,12 @@
 package uz.lab.eduapplication.domain;
 
 import lombok.*;
-import org.hibernate.Hibernate;
 import uz.lab.eduapplication.domain.template.AbstractDomain;
-import uz.lab.eduapplication.service.impl.QuestionDTO;
+import uz.lab.eduapplication.DTO.QuestionDTO;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.ManyToOne;
-import java.util.Objects;
 
 @Entity
 @Getter

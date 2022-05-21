@@ -1,9 +1,9 @@
-package uz.lab.eduapplication.domain.controller;
+package uz.lab.eduapplication.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import uz.lab.eduapplication.DTO.AnswerDTO;
-import uz.lab.eduapplication.service.impl.AnswerService;
+import uz.lab.eduapplication.service.AnswerService;
 
 import java.util.List;
 import java.util.UUID;

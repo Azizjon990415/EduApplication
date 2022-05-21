@@ -1,5 +1,6 @@
 package uz.lab.eduapplication.service.impl;
 
+import org.springframework.stereotype.Service;
 import uz.lab.eduapplication.DTO.TestDTO;
 import uz.lab.eduapplication.mapper.TestMapper;
 import uz.lab.eduapplication.mapper.TestMapper;
@@ -10,6 +11,7 @@ import uz.lab.eduapplication.service.TestService;
 import java.util.List;
 import java.util.UUID;
 
+@Service
 public class TestServiceImpl implements TestService {
     private TestRepository testRepository;
     private TestMapper testMapper;

@@ -7,7 +7,7 @@ import uz.lab.eduapplication.DTO.TestDTO;
 import java.util.List;
 import java.util.UUID;
 
-@Service
+
 public interface TestService {
     public List<TestDTO> getAllTests();
     public TestDTO getOneTest(UUID id);
