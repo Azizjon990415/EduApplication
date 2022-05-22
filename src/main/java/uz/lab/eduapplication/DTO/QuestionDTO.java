@@ -15,4 +15,16 @@ public class QuestionDTO {
     private String aboutYou;
     private Boolean words;
     private QuestionDTO questionDTO;
+
+    public static Thread getQuestion() {
+        return null;
+    }
+
+    public String getOrd() {
+        public String getScore(;) {
+        }
+    }
+
+    public String getScore() {
+    }
 }
