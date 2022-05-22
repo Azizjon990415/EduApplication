@@ -1,6 +1,7 @@
 package uz.lab.eduapplication.service.impl;
 
 import lombok.AllArgsConstructor;
+import org.springframework.stereotype.Service;
 import uz.lab.eduapplication.DTO.QuestionDTO;
 import uz.lab.eduapplication.mapper.QuestionMapper;
 import uz.lab.eduapplication.repository.QuestionRepository;
@@ -8,7 +9,7 @@ import uz.lab.eduapplication.service.QuestionService;
 
 import java.util.List;
 import java.util.UUID;
-
+@Service
 @AllArgsConstructor
 public class QuestionServiceImpl implements QuestionService {
     private QuestionRepository questionRepository;

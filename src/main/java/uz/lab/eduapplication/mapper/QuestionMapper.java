@@ -4,10 +4,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import uz.lab.eduapplication.DTO.TestDTO;
 import uz.lab.eduapplication.domain.Question;
-import uz.lab.eduapplication.domain.Section;
 import uz.lab.eduapplication.domain.Test;
 import uz.lab.eduapplication.repository.QuestionRepository;
-import uz.lab.eduapplication.service.impl.QuestionDTO;
+import uz.lab.eduapplication.DTO.QuestionDTO;
 
 import java.util.Optional;
 import java.util.UUID;

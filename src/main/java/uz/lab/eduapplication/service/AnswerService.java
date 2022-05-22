@@ -1,4 +1,4 @@
-package uz.lab.eduapplication.service.impl;
+package uz.lab.eduapplication.service;
 
 import org.springframework.stereotype.Service;
 import uz.lab.eduapplication.DTO.AnswerDTO;
@@ -7,7 +7,7 @@ import uz.lab.eduapplication.DTO.BookDTO;
 import java.util.List;
 import java.util.UUID;
 
-@Service
+
 public interface AnswerService {
     public List<AnswerDTO> getAllAnswers();
     public AnswerDTO getOneAnswer(UUID id);
