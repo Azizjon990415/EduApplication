@@ -51,10 +51,10 @@ public class BookServiceImplement implements BookService {
 
     @Override
     public BookDTO editBook(BookDTO bookDTO) {
-        boolean exists = bookRepository.existsById(UUID.fromString(bookDTO.getId()));
+        boolean exists = bookRepository.existsById(UUID.fromString(bookDTO.getID()));
         if (exists) {
             Book book = bookMapper.mapBookDTOToBookDomain(bookDTO);
-            Book savedBook = bookRepository.save(book);
+            Book savedBook = bookMapper.save(book);
             BookDTO savedBookDTO = bookMapper.mapBookDomainToBookDTO(savedBook);
             return savedBookDTO;
         } else {
