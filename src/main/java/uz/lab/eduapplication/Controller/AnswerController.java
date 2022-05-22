@@ -1,4 +1,4 @@
-package uz.lab.eduapplication.domain.controller;
+package uz.lab.eduapplication.Controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
