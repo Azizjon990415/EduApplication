@@ -2,31 +2,39 @@ package uz.lab.eduapplication.mapper;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
+import uz.lab.eduapplication.DTO.AnswerWithoutTestDTO;
+import uz.lab.eduapplication.DTO.QuestionWithoutTestDTO;
 import uz.lab.eduapplication.DTO.TestDTO;
+import uz.lab.eduapplication.DTO.TestQuestionAndAnswerDTO;
 import uz.lab.eduapplication.domain.Question;
 import uz.lab.eduapplication.domain.Section;
 import uz.lab.eduapplication.domain.Test;
 import uz.lab.eduapplication.repository.SectionRepository;
 import uz.lab.eduapplication.repository.TestRepository;
 
+import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 
 @Component
 public class TestMapper {
     @Autowired
-    TestRepository testRepository;
+    SectionRepository sectionRepository;
     @Autowired
     SectionMapper sectionMapper;
     public Test mapTestDTOToTestDomain(TestDTO testDTO){
-        return testDTO.getId()==null ? new Test(testDTO.getOrd(),testDTO.getScore(), sectionMapper.mapSectionDTOToSectionDomain(testDTO.getSection())) :
-                testRepository.findById(UUID.fromString(String.valueOf(testDTO.getId())))
-                        .map(question -> new Test(question.getOrd(),question.getScore(), question.getSection()))
-                        .orElseGet(()->new Test(testDTO.getOrd(),testDTO.getScore(), sectionMapper.mapSectionDTOToSectionDomain(testDTO.getSection())));
+        return testDTO.getSectionDTO().getId()==null ? new Test(testDTO.getOrd(),testDTO.getScore(), sectionMapper.mapSectionDTOToSectionDomain(testDTO.getSectionDTO())) :
+                sectionRepository.findById(UUID.fromString(String.valueOf(testDTO.getSectionDTO().getId())))
+                        .map(section -> new Test(testDTO.getOrd(),testDTO.getScore(), section))
+                        .orElseGet(()->new Test(testDTO.getOrd(),testDTO.getScore(), sectionMapper.mapSectionDTOToSectionDomain(testDTO.getSectionDTO())));
 
     }
 
     public TestDTO mapTestDomainToTestDTO(Test test){
         return new TestDTO(test.getId().toString(), test.getOrd(), test.getScore(), sectionMapper.mapSectionDomainToSectionDTO(test.getSection()));
+    }
+
+    public TestQuestionAndAnswerDTO mapTestQuestionAndAnswerDTO(Test test, List<QuestionWithoutTestDTO> questionWithoutTestDTOS, List<AnswerWithoutTestDTO> answerWithoutTestDTOS){
+        return  new TestQuestionAndAnswerDTO(test.getId().toString(), test.getOrd(), test.getScore(), questionWithoutTestDTOS, answerWithoutTestDTOS);
     }
 }

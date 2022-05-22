@@ -1,41 +1,41 @@
-package uz.lab.eduapplication.Controller;
+package uz.lab.eduapplication.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import uz.lab.eduapplication.DTO.QuestionDTO;
 import uz.lab.eduapplication.service.QuestionService;
-import uz.lab.eduapplication.service.impl.QuestionDTO;
-import uz.lab.eduapplication.service.impl.QuestionService;
 
 import java.util.List;
 import java.util.UUID;
 
-    @RestController
-    public class QuestionController {
-        @Autowired
-        QuestionService questionService;
-        @GetMapping("api/question")
-        public List<QuestionDTO> getAllQuestions(){
-            return questionService.getAllQuestions();
-        }
+@RestController
+@RequestMapping("api/question")
+public class QuestionController {
+    @Autowired
+    QuestionService questionService;
 
-        @GetMapping("api/question/{id}")
-        public QuestionDTO getQuestion(@PathVariable UUID id){
-            return questionService.getOneQuestion(id);
-        }
+    @GetMapping()
+    public List<QuestionDTO> getAllQuestions() {
+        return questionService.getAllQuestions();
+    }
 
-        @PostMapping("api/question")
-        public QuestionDTO saveNewQuestion(@RequestBody QuestionDTO questionDTO){
-            return questionService.saveQuestion(questionDTO);
-        }
+    @GetMapping("/{id}")
+    public QuestionDTO getQuestion(@PathVariable UUID id) {
+        return questionService.getOneQuestion(id);
+    }
 
-        @PutMapping("api/question/{id}")
-        public QuestionDTO editQuestion(@PathVariable Long id,@RequestBody QuestionDTO questionDTO){
-            return questionService.editQuestion(questionDTO);
-        }
+    @PostMapping()
+    public QuestionDTO saveNewQuestion(@RequestBody QuestionDTO questionDTO) {
+        return questionService.saveQuestion(questionDTO);
+    }
 
-        @DeleteMapping("api/question/{id}")
-        public String deleteQuestion(@PathVariable UUID id){
-            return questionService.deleteQuestion(id);
-        }
+    @PutMapping()
+    public QuestionDTO editQuestion(@RequestBody QuestionDTO questionDTO) {
+        return questionService.editQuestion(questionDTO);
+    }
+
+    @DeleteMapping("/{id}")
+    public String deleteQuestion(@PathVariable UUID id) {
+        return questionService.deleteQuestion(id);
+    }
 }

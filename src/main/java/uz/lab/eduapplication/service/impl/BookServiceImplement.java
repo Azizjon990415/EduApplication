@@ -1,6 +1,7 @@
 package uz.lab.eduapplication.service.impl;
 
 import lombok.AllArgsConstructor;
+import org.springframework.stereotype.Service;
 import uz.lab.eduapplication.DTO.BookDTO;
 import uz.lab.eduapplication.domain.Book;
 import uz.lab.eduapplication.mapper.BookMapper;
@@ -12,6 +13,7 @@ import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 
+@Service
 @AllArgsConstructor
 public class BookServiceImplement implements BookService {
 
@@ -51,10 +53,10 @@ public class BookServiceImplement implements BookService {
 
     @Override
     public BookDTO editBook(BookDTO bookDTO) {
-        boolean exists = bookRepository.existsById(UUID.fromString(bookDTO.getID()));
+        boolean exists = bookRepository.existsById(UUID.fromString(bookDTO.getId()));
         if (exists) {
             Book book = bookMapper.mapBookDTOToBookDomain(bookDTO);
-            Book savedBook = bookMapper.save(book);
+            Book savedBook = bookRepository.save(book);
             BookDTO savedBookDTO = bookMapper.mapBookDomainToBookDTO(savedBook);
             return savedBookDTO;
         } else {

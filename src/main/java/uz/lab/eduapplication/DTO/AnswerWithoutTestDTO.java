@@ -4,15 +4,11 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import javax.persistence.ManyToOne;
-
 @Data
     @AllArgsConstructor
     @NoArgsConstructor
-    public class AnswerDTO {
+    public class AnswerWithoutTestDTO {
         private String id;
         private boolean correct;
         private String text;
-        private TestDTO testDTO;
-
     }
