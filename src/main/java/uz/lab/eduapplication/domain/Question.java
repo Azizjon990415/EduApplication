@@ -28,6 +28,9 @@ public class Question extends AbstractDomain {
     }
 
     public Object getScore() {
+
+        public QuestionDTO getQuestion() {
+        }
     }
 
     public QuestionDTO getQuestion() {

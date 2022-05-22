@@ -18,8 +18,14 @@ import java.util.UUID;
         QuestionRepository questionRepository;
         @Autowired
         QuestionMapper questionMapper;
+
+        public QuestionMapper(QuestionRepository questionRepository, QuestionMapper questionMapper) {
+            this.questionRepository = questionRepository;
+            this.questionMapper = questionMapper;
+        }
+
         public Test mapQuestionDTOToQuestionDomain(QuestionDTO questionDTO){
-            Optional<Question> questionOptional = questionRepository.findById(UUID.fromString(QuestionDTO.getQuestion().getId()));
+            Optional<Question> questionOptional = questionRepository.findById(UUID.fromString(String.valueOf(QuestionDTO.getQuestion().getId())));
             if (questionOptional.isPresent()){
                 return new Question(questionDTO.getOrd(),questionDTO.getScore(), questionOptional.get());
             }else {
