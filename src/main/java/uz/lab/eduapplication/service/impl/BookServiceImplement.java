@@ -2,9 +2,7 @@ package uz.lab.eduapplication.service.impl;
 
 import lombok.AllArgsConstructor;
 import uz.lab.eduapplication.DTO.BookDTO;
-import uz.lab.eduapplication.DTO.SectionDTO;
 import uz.lab.eduapplication.domain.Book;
-import uz.lab.eduapplication.domain.Section;
 import uz.lab.eduapplication.mapper.BookMapper;
 import uz.lab.eduapplication.repository.BookRepository;
 import uz.lab.eduapplication.service.BookService;
@@ -34,7 +32,7 @@ public class BookServiceImplement implements BookService {
     @Override
     public BookDTO getOneBook(UUID id) {
         Optional<Book> optionalBook = bookRepository.findById(id);
-        if (optionalBook.isPresent()){
+        if (optionalBook.isPresent()) {
             Book book = optionalBook.get();
             BookDTO bookDTO = bookMapper.mapBookDomainToBookDTO(book);
             return bookDTO;
@@ -59,8 +57,8 @@ public class BookServiceImplement implements BookService {
             Book savedBook = bookRepository.save(book);
             BookDTO savedBookDTO = bookMapper.mapBookDomainToBookDTO(savedBook);
             return savedBookDTO;
-        }else {
-            throw new NullPointerException("I can't find the Book with id"+ bookDTO.getId());
+        } else {
+            throw new NullPointerException("I can't find the Book with id" + bookDTO.getId());
         }
     }
 
@@ -70,7 +68,7 @@ public class BookServiceImplement implements BookService {
         if (exists) {
             bookRepository.deleteById(id);
             return "Data deleted";
-        }else {
+        } else {
             throw new NullPointerException("I can not find the Sectione with id" + id);
         }
     }

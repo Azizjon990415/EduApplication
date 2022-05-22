@@ -38,7 +38,6 @@ public class SectionServiceImpl implements SectionService {
         } else {
             throw new NullPointerException("I can not find the Section with  id" + id);
         }
-
     }
 
     @Override
@@ -69,7 +68,7 @@ public class SectionServiceImpl implements SectionService {
         if (exists) {
             sectionRepository.deleteById(id);
             return "Data deleted";
-        }else {
+        } else {
             throw new NullPointerException("I can not find the Section with  id" + id);
         }
     }

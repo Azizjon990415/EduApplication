@@ -17,24 +17,19 @@ import java.util.UUID;
         @Autowired
         QuestionRepository questionRepository;
         @Autowired
-        QuestionMapper questionMapper;
+        TestMapper testMapper;
 
-        public QuestionMapper(QuestionRepository questionRepository, QuestionMapper questionMapper) {
-            this.questionRepository = questionRepository;
-            this.questionMapper = questionMapper;
-        }
 
-        public Test mapQuestionDTOToQuestionDomain(QuestionDTO questionDTO){
-            Optional<Question> questionOptional = questionRepository.findById(UUID.fromString(String.valueOf(QuestionDTO.getQuestion().getId())));
-            if (questionOptional.isPresent()){
-                return new Question(questionDTO.getOrd(),questionDTO.getScore(), questionOptional.get());
-            }else {
-                return new Test(questionDTO.getOrd(),questionDTO.getScore(), questionMapper.mapQuestionDTOToQuestionDomain(),(questionDTO.getQuestionDTO()));
-            }
+        public Question mapQuestionDTOToQuestionDomain(QuestionDTO questionDTO){
+           return questionDTO.getId()==null ? new Question(questionDTO.getOrd(),questionDTO.getText(), testMapper.mapTestDTOToTestDomain(questionDTO.getTest())) :
+                   questionRepository.findById(UUID.fromString(String.valueOf(questionDTO.getId())))
+                    .map(question -> new Question(question.getOrd(),question.getText(), question.getTest()))
+                           .orElseGet(()->new Question(questionDTO.getOrd(),questionDTO.getText(), testMapper.mapTestDTOToTestDomain(questionDTO.getTest())));
+
         }
 
         public QuestionDTO mapQuestionDomainToQuestionDTO(Question question){
-            return new TestDTO(question.getId().toString(), question.getOrd(), question.getScore(), questionMapper.mapQuestionDTOToQuestionDomain(question.getQuestion()));
+            return new QuestionDTO(question.getId().toString(), question.getOrd(), question.getText(), testMapper.mapTestDomainToTestDTO(question.getTest()));
         }
 
     }

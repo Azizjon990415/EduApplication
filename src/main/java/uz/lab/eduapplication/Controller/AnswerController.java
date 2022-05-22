@@ -10,30 +10,31 @@ import java.util.UUID;
 
 @RestController
 public class AnswerController {
-        @Autowired
-        AnswerService answerService;
-        @GetMapping("api/answer")
-        public List<AnswerDTO> getAllAnswers(){
-            return answerService.getAllAnswers();
-        }
+    @Autowired
+    AnswerService answerService;
 
-        @GetMapping("api/answer/{id}")
-        public AnswerDTO getAnswer(@PathVariable UUID id){
-            return answerService.getOneAnswer(id);
-        }
+    @GetMapping("api/answer")
+    public List<AnswerDTO> getAllAnswers() {
+        return answerService.getAllAnswers();
+    }
 
-        @PostMapping("api/answer")
-        public AnswerDTO saveNewAnswer(@RequestBody AnswerDTO answerDTO){
-            return answerService.saveAnswer(answerDTO);
-        }
+    @GetMapping("api/answer/{id}")
+    public AnswerDTO getAnswer(@PathVariable UUID id) {
+        return answerService.getOneAnswer(id);
+    }
 
-        @PutMapping("api/answer/{id}")
-        public AnswerDTO editAnswer(@PathVariable Long id,@RequestBody AnswerDTO answerDTO){
-            return answerService.editAnswer(answerDTO);
-        }
+    @PostMapping("api/answer")
+    public AnswerDTO saveNewAnswer(@RequestBody AnswerDTO answerDTO) {
+        return answerService.saveAnswer(answerDTO);
+    }
 
-        @DeleteMapping("api/answer/{id}")
-        public String deleteAnswer(@PathVariable UUID id){
-            return answerService.deleteAnswer(id);
-        }
+    @PutMapping("api/answer/{id}")
+    public AnswerDTO editAnswer(@PathVariable Long id, @RequestBody AnswerDTO answerDTO) {
+        return answerService.editAnswer(answerDTO);
+    }
+
+    @DeleteMapping("api/answer/{id}")
+    public String deleteAnswer(@PathVariable UUID id) {
+        return answerService.deleteAnswer(id);
+    }
 }
