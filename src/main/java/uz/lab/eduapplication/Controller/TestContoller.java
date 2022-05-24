@@ -3,6 +3,7 @@ package uz.lab.eduapplication.controller;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import uz.lab.eduapplication.DTO.TestDTO;
+import uz.lab.eduapplication.DTO.TestQuestionAndAnswerDTO;
 import uz.lab.eduapplication.service.TestService;
 
 import java.util.List;
@@ -22,6 +23,11 @@ public class TestContoller {
     @GetMapping("api/test/{id}")
     public TestDTO getTest(@PathVariable UUID id) {
         return testService.getOneTest(id);
+    }
+
+    @GetMapping("api/test-with-answer-and-question/{id}")
+    public TestQuestionAndAnswerDTO getTestWithAnswersAndQuestions(@PathVariable UUID id) {
+        return testService.getAllQuestionAndAnswerWhichConnectedToTest(id);
     }
 
     @PostMapping("api/test")
