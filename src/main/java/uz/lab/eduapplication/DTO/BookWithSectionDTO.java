@@ -4,6 +4,8 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.util.List;
+
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
@@ -13,5 +15,5 @@ public class BookWithSectionDTO {
     private String nameRu;
     private String nameEn;
     private Boolean active;
-    private List <SectionWithoutBookDTO>;
+    private List<SectionWithoutBookDTO> section;
 }
