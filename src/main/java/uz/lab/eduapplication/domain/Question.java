@@ -27,12 +27,4 @@ public class Question extends AbstractDomain {
         return getClass().hashCode();
     }
 
-    public Object getScore() {
-
-        public QuestionDTO getQuestion() {
-        }
-    }
-
-    public QuestionDTO getQuestion() {
-    }
 }

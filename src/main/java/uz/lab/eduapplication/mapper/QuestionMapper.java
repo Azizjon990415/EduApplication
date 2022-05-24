@@ -2,11 +2,13 @@ package uz.lab.eduapplication.mapper;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
+import uz.lab.eduapplication.DTO.QuestionWithoutTestDTO;
 import uz.lab.eduapplication.DTO.TestDTO;
 import uz.lab.eduapplication.domain.Question;
 import uz.lab.eduapplication.domain.Test;
 import uz.lab.eduapplication.repository.QuestionRepository;
 import uz.lab.eduapplication.DTO.QuestionDTO;
+import uz.lab.eduapplication.repository.TestRepository;
 
 import java.util.Optional;
 import java.util.UUID;
@@ -15,26 +17,25 @@ import java.util.UUID;
     public class QuestionMapper {
 
         @Autowired
-        QuestionRepository questionRepository;
+        TestRepository testRepository;
         @Autowired
-        QuestionMapper questionMapper;
+        TestMapper testMapper;
 
-        public QuestionMapper(QuestionRepository questionRepository, QuestionMapper questionMapper) {
-            this.questionRepository = questionRepository;
-            this.questionMapper = questionMapper;
-        }
 
-        public Test mapQuestionDTOToQuestionDomain(QuestionDTO questionDTO){
-            Optional<Question> questionOptional = questionRepository.findById(UUID.fromString(String.valueOf(QuestionDTO.getQuestion().getId())));
-            if (questionOptional.isPresent()){
-                return new Question(questionDTO.getOrd(),questionDTO.getScore(), questionOptional.get());
-            }else {
-                return new Test(questionDTO.getOrd(),questionDTO.getScore(), questionMapper.mapQuestionDTOToQuestionDomain(),(questionDTO.getQuestionDTO()));
-            }
+        public Question mapQuestionDTOToQuestionDomain(QuestionDTO questionDTO){
+           return questionDTO.getTestDTO().getId()==null ? new Question(questionDTO.getOrd(),questionDTO.getText(), testMapper.mapTestDTOToTestDomain(questionDTO.getTestDTO())) :
+                   testRepository.findById(UUID.fromString(String.valueOf(questionDTO.getTestDTO().getId())))
+                    .map(test -> new Question(questionDTO.getOrd(),questionDTO.getText(), test))
+                           .orElseGet(()->new Question(questionDTO.getOrd(),questionDTO.getText(), testMapper.mapTestDTOToTestDomain(questionDTO.getTestDTO())));
+
         }
 
         public QuestionDTO mapQuestionDomainToQuestionDTO(Question question){
-            return new TestDTO(question.getId().toString(), question.getOrd(), question.getScore(), questionMapper.mapQuestionDTOToQuestionDomain(question.getQuestion()));
+            return new QuestionDTO(question.getId().toString(), question.getOrd(), question.getText(), testMapper.mapTestDomainToTestDTO(question.getTest()));
+        }
+
+        public QuestionWithoutTestDTO mapQuestionDomainToQuestionWithoutTestDTO(Question question){
+            return new QuestionWithoutTestDTO(question.getId().toString(), question.getOrd(), question.getText());
         }
 
     }

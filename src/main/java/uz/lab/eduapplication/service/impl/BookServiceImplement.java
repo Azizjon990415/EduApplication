@@ -1,10 +1,9 @@
 package uz.lab.eduapplication.service.impl;
 
 import lombok.AllArgsConstructor;
+import org.springframework.stereotype.Service;
 import uz.lab.eduapplication.DTO.BookDTO;
-import uz.lab.eduapplication.DTO.SectionDTO;
 import uz.lab.eduapplication.domain.Book;
-import uz.lab.eduapplication.domain.Section;
 import uz.lab.eduapplication.mapper.BookMapper;
 import uz.lab.eduapplication.repository.BookRepository;
 import uz.lab.eduapplication.service.BookService;
@@ -14,6 +13,7 @@ import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 
+@Service
 @AllArgsConstructor
 public class BookServiceImplement implements BookService {
 
@@ -34,7 +34,7 @@ public class BookServiceImplement implements BookService {
     @Override
     public BookDTO getOneBook(UUID id) {
         Optional<Book> optionalBook = bookRepository.findById(id);
-        if (optionalBook.isPresent()){
+        if (optionalBook.isPresent()) {
             Book book = optionalBook.get();
             BookDTO bookDTO = bookMapper.mapBookDomainToBookDTO(book);
             return bookDTO;
@@ -53,14 +53,14 @@ public class BookServiceImplement implements BookService {
 
     @Override
     public BookDTO editBook(BookDTO bookDTO) {
-        boolean exists = bookRepository.existsById(UUID.fromString(bookDTO.getID()));
+        boolean exists = bookRepository.existsById(UUID.fromString(bookDTO.getId()));
         if (exists) {
             Book book = bookMapper.mapBookDTOToBookDomain(bookDTO);
-            Book savedBook = bookMapper.save(book);
+            Book savedBook = bookRepository.save(book);
             BookDTO savedBookDTO = bookMapper.mapBookDomainToBookDTO(savedBook);
             return savedBookDTO;
-        }else {
-            throw new NullPointerException("I can't find the Book with id"+ bookDTO.getId());
+        } else {
+            throw new NullPointerException("I can't find the Book with id" + bookDTO.getId());
         }
     }
 
@@ -70,7 +70,7 @@ public class BookServiceImplement implements BookService {
         if (exists) {
             bookRepository.deleteById(id);
             return "Data deleted";
-        }else {
+        } else {
             throw new NullPointerException("I can not find the Sectione with id" + id);
         }
     }

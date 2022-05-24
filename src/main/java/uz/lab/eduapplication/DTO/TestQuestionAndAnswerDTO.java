@@ -3,14 +3,18 @@ package uz.lab.eduapplication.DTO;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import uz.lab.eduapplication.domain.Test;
+
+import java.util.ArrayList;
+import java.util.List;
 
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class TestDTO {
+public class TestQuestionAndAnswerDTO {
     private String id;
     private Integer ord;
     private Integer score;
-    private SectionDTO sectionDTO;
+    private List<QuestionWithoutTestDTO> questionDTO;
+    private List<AnswerWithoutTestDTO> answerDTO;
+
 }

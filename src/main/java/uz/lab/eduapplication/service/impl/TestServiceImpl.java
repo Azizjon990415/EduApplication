@@ -1,69 +1,71 @@
 package uz.lab.eduapplication.service.impl;
 
 import lombok.AllArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+import uz.lab.eduapplication.DTO.AnswerWithoutTestDTO;
+import uz.lab.eduapplication.DTO.QuestionWithoutTestDTO;
 import uz.lab.eduapplication.DTO.TestDTO;
-import uz.lab.eduapplication.DTO.TestDTO;
-import uz.lab.eduapplication.DTO.TestDTO;
-import uz.lab.eduapplication.domain.Test;
+import uz.lab.eduapplication.DTO.TestQuestionAndAnswerDTO;
+import uz.lab.eduapplication.domain.Answer;
+import uz.lab.eduapplication.domain.Question;
 import uz.lab.eduapplication.domain.Test;
 import uz.lab.eduapplication.mapper.AnswerMapper;
+import uz.lab.eduapplication.mapper.QuestionMapper;
 import uz.lab.eduapplication.mapper.TestMapper;
-import uz.lab.eduapplication.repository.testRepository;
+import uz.lab.eduapplication.repository.AnswerRepository;
+import uz.lab.eduapplication.repository.QuestionRepository;
 import uz.lab.eduapplication.repository.TestRepository;
 import uz.lab.eduapplication.service.TestService;
 
-import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
 import java.util.UUID;
+import java.util.stream.Collectors;
 
+@Service
 @AllArgsConstructor
-public class TestServiceImplement implements TestService {
-
+public class TestServiceImpl implements TestService {
     private TestRepository testRepository;
     private TestMapper testMapper;
+    private AnswerMapper answerMapper;
+    private QuestionMapper questionMapper;
+    private QuestionRepository questionRepository;
+    private AnswerRepository answerRepository;
 
     @Override
     public List<TestDTO> getAllTests() {
-        List<Test> tests = testRepository.findAll();
-        List<Test> answerDTOS = new ArrayList<>();
-        tests.forEach(test -> {
-            TestDTO answerDTO = testMapper.mapTestDomainToTestDTO(test);
-            answerDTOS.add(answerDTO);
-        });
-        return answerDTOS;
+        return testRepository.findAll().stream()
+                .map(testMapper::mapTestDomainToTestDTO)
+                .collect(Collectors.toList());
     }
 
     @Override
     public TestDTO getOneTest(UUID id) {
-        Optional<Test> optionalAnswer = testRepository.findById(id);
-        if (optionalAnswer.isPresent()){
-            Test test = optionalAnswer.get();
-            TestDTO testDTO = testMapper.mapTestDomainToTestDTO(test);
-            return answerDTO;
-        } else {
-            throw new NullPointerException("I can not find the Test with  id" + id);
-        }
+        return testRepository.findById(id)
+                .map(testMapper::mapTestDomainToTestDTO)
+                .orElseThrow(NullPointerException::new);
     }
 
     @Override
-    public TestDTO saveTest(TestDTO test) {
-        Test test = testMapper.mapTestDomainToTestDomain(answerDTO);
-        Test saved = testRepository.save(test);mapTestDomainToTestDTO
-        TestDTO savedTestDTO = testMapper.(savedTest);
-        return savedTestDTO;
+    public TestDTO saveTest(TestDTO testDTO) {
+        return testMapper.mapTestDomainToTestDTO(
+                testRepository.save(
+                        testMapper.mapTestDTOToTestDomain(testDTO)
+                )
+        );
     }
 
     @Override
-    public TestDTO editTest(TestDTO test) {
-        boolean exists = testRepository.existsById(UUID.fromString(testDTO.getID()));
+    public TestDTO editTest(TestDTO testDTO) {
+        boolean exists = testRepository.existsById(UUID.fromString(testDTO.getId()));
         if (exists) {
             Test test = testMapper.mapTestDTOToTestDomain(testDTO);
-            Test savedTest = testMapper.save(test);
-            TestDTO savedTestDTO = testMapper.mapTestDomainToTestDTO(savedTest);
-            return savedTestDTO;
-        }else {
-            throw new NullPointerException("I can't find the Test with id"+ testDTO.getId());
+            test.setId(UUID.fromString(testDTO.getId()));
+            return testMapper.mapTestDomainToTestDTO(
+                    testRepository.save(test)
+            );
+        } else {
+            throw new NullPointerException("I can not find the Section with  id" + testDTO.getId());
         }
     }
 
@@ -73,8 +75,20 @@ public class TestServiceImplement implements TestService {
         if (exists) {
             testRepository.deleteById(id);
             return "Data deleted";
-        }else {
-            throw new NullPointerException("I can not find the Sectione with id" + id);
+        } else {
+            throw new NullPointerException("I can not find the Section with  id" + id);
         }
+    }
+
+    @Override
+    public TestQuestionAndAnswerDTO getAllQuestionAndAnswerWhichConnectedToTest(UUID testId) {
+      return testRepository.findById(testId).map(test -> {
+            List<Answer> answersByTestId = answerRepository.findAnswersByTestId(testId);
+            List<Question> questionsByTestId = questionRepository.findWuestionsByTestId(testId);
+            List<AnswerWithoutTestDTO> answerWithoutTestDTOS = answersByTestId.stream().map(answerMapper::mapAnswerDomainToAnswerWithoutTestDTO).collect(Collectors.toList());
+            List<QuestionWithoutTestDTO> questionWithoutTestDTOS = questionsByTestId.stream().map(questionMapper::mapQuestionDomainToQuestionWithoutTestDTO).collect(Collectors.toList());
+            return testMapper.mapTestQuestionAndAnswerDTO(test,questionWithoutTestDTOS,answerWithoutTestDTOS);
+        }).orElseThrow(NullPointerException::new);
+
     }
 }
