@@ -4,8 +4,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import uz.lab.eduapplication.DTO.QuestionDTO;
 import uz.lab.eduapplication.service.QuestionService;
-import uz.lab.eduapplication.service.impl.QuestionDTO;
-import uz.lab.eduapplication.service.impl.QuestionService;
 
 import java.util.List;
 import java.util.UUID;
