@@ -15,5 +15,5 @@ public class BookWithSectionDTO {
     private String nameRu;
     private String nameEn;
     private Boolean active;
-    private List<SectionWithoutBookDTO> section;
+    private List<SectionWithoutBookDTO> sections;
 }

@@ -3,6 +3,7 @@ package uz.lab.eduapplication.service.impl;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 import uz.lab.eduapplication.DTO.SectionDTO;
+import uz.lab.eduapplication.DTO.SectionWithoutBookDTO;
 import uz.lab.eduapplication.domain.Section;
 import uz.lab.eduapplication.mapper.SectionMapper;
 import uz.lab.eduapplication.repository.SectionRepository;
@@ -71,5 +72,15 @@ public class SectionServiceImpl implements SectionService {
         } else {
             throw new NullPointerException("I can not find the Section with  id" + id);
         }
+    }
+    @Override
+    public List<SectionWithoutBookDTO> getSectionwithBookId(UUID bookId){
+        List<Section> sectionsByBookId = sectionRepository.findSectionsByBookId(bookId);
+        List<SectionWithoutBookDTO> sectionWithoutBookDTOS = new ArrayList<>();
+        sectionsByBookId.forEach(section -> {
+            SectionWithoutBookDTO sectionWithoutBookDTO = sectionMapper.mapSectionWithoutBookDTO(section);
+            sectionWithoutBookDTOS.add(sectionWithoutBookDTO);
+        });
+        return sectionWithoutBookDTOS;
     }
 }

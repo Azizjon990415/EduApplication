@@ -3,10 +3,13 @@ package uz.lab.eduapplication.service.impl;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 import uz.lab.eduapplication.DTO.BookDTO;
+import uz.lab.eduapplication.DTO.BookWithSectionDTO;
+import uz.lab.eduapplication.DTO.SectionWithoutBookDTO;
 import uz.lab.eduapplication.domain.Book;
 import uz.lab.eduapplication.mapper.BookMapper;
 import uz.lab.eduapplication.repository.BookRepository;
 import uz.lab.eduapplication.service.BookService;
+import uz.lab.eduapplication.service.SectionService;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -19,6 +22,7 @@ public class BookServiceImplement implements BookService {
 
     private BookRepository bookRepository;
     private BookMapper bookMapper;
+    private SectionService sectionService;
 
     @Override
     public List<BookDTO> getAllBooks() {
@@ -72,6 +76,19 @@ public class BookServiceImplement implements BookService {
             return "Data deleted";
         } else {
             throw new NullPointerException("I can not find the Sectione with id" + id);
+        }
+    }
+
+    @Override
+    public BookWithSectionDTO getBookWithSections(UUID bookId) {
+        Optional<Book> bookOptional = bookRepository.findById(bookId);
+        if (bookOptional.isPresent()) {
+            Book book = bookOptional.get();
+            List<SectionWithoutBookDTO> sectionwithBookId = sectionService.getSectionwithBookId(bookId);
+            BookWithSectionDTO bookWithSectionDTO = bookMapper.mapBookWithSectionDTO(book, sectionwithBookId);
+            return bookWithSectionDTO;
+        } else {
+            throw  new NullPointerException();
         }
     }
 }
