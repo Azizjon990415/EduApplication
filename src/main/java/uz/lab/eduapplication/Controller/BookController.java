@@ -3,6 +3,7 @@ package uz.lab.eduapplication.controller;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import uz.lab.eduapplication.DTO.BookDTO;
+import uz.lab.eduapplication.DTO.BookWithSectionDTO;
 import uz.lab.eduapplication.DTO.QuestionDTO;
 import uz.lab.eduapplication.service.BookService;
 import uz.lab.eduapplication.service.QuestionService;
@@ -39,6 +40,11 @@ public class BookController {
     @DeleteMapping("/{id}")
     public String deleteBook(@PathVariable UUID id) {
         return bookService.deleteBook(id);
+    }
+
+    @GetMapping("/book-with-section/{bookId}")
+    public BookWithSectionDTO getBookWithSections(@PathVariable UUID bookId){
+        return bookService.getBookWithSections(bookId);
     }
 
 }
