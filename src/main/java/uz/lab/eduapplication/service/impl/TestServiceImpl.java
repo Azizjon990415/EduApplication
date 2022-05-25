@@ -90,7 +90,7 @@ public class TestServiceImpl implements TestService {
     }
 
     @Override
-    public List<TestWithoutSectionDTO> getTestWithSectionId(UUID sectionId) {
-        return null;
+    public List<TestWithoutSectionDTO> getTestWithSectionId(UUID sectionId){
+
     }
 }
