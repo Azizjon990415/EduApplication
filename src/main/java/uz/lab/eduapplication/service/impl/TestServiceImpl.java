@@ -15,6 +15,7 @@ import uz.lab.eduapplication.repository.QuestionRepository;
 import uz.lab.eduapplication.repository.TestRepository;
 import uz.lab.eduapplication.service.TestService;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 import java.util.stream.Collectors;
@@ -91,6 +92,12 @@ public class TestServiceImpl implements TestService {
 
     @Override
     public List<TestWithoutSectionDTO> getTestWithSectionId(UUID sectionId){
-
+        List<Test> testsBySectionId = testRepository.findTestsBySectionId(sectionId);
+        List<TestWithoutSectionDTO> testWithoutSectionDTOList = new ArrayList<>();
+        testsBySectionId.forEach(test -> {
+            TestWithoutSectionDTO testWithoutSectionDTO = testMapper.mapTestWithoutSectionDTO(test);
+            testWithoutSectionDTOList.add(testWithoutSectionDTO);
+        });
+        return testWithoutSectionDTOList;
     }
 }

@@ -3,6 +3,7 @@ package uz.lab.eduapplication.controller;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import uz.lab.eduapplication.DTO.SectionDTO;
+import uz.lab.eduapplication.DTO.SectionWithTestDTO;
 import uz.lab.eduapplication.service.SectionService;
 
 import java.util.List;
@@ -37,6 +38,11 @@ public class SectionController {
     @DeleteMapping("/{id}")
     public String deleteSection(@PathVariable UUID id){
         return sectionService.deleteSection(id);
+    }
+
+    @GetMapping("/with-test/{sectionId}")
+    public SectionWithTestDTO getSectionWithTests(@PathVariable UUID sectionId){
+        return sectionService.getSectionWithTests(sectionId);
     }
 
 }

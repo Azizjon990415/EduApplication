@@ -3,11 +3,14 @@ package uz.lab.eduapplication.service.impl;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 import uz.lab.eduapplication.DTO.SectionDTO;
+import uz.lab.eduapplication.DTO.SectionWithTestDTO;
 import uz.lab.eduapplication.DTO.SectionWithoutBookDTO;
+import uz.lab.eduapplication.DTO.TestWithoutSectionDTO;
 import uz.lab.eduapplication.domain.Section;
 import uz.lab.eduapplication.mapper.SectionMapper;
 import uz.lab.eduapplication.repository.SectionRepository;
 import uz.lab.eduapplication.service.SectionService;
+import uz.lab.eduapplication.service.TestService;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -18,6 +21,8 @@ import java.util.UUID;
 public class SectionServiceImpl implements SectionService {
     private SectionRepository sectionRepository;
     private SectionMapper sectionMapper;
+    private TestService testService;
+
     @Override
     public List<SectionDTO> getAllSections() {
         List<Section> sections = sectionRepository.findAll();
@@ -73,6 +78,7 @@ public class SectionServiceImpl implements SectionService {
             throw new NullPointerException("I can not find the Section with  id" + id);
         }
     }
+
     @Override
     public List<SectionWithoutBookDTO> getSectionwithBookId(UUID bookId){
         List<Section> sectionsByBookId = sectionRepository.findSectionsByBookId(bookId);
@@ -82,5 +88,18 @@ public class SectionServiceImpl implements SectionService {
             sectionWithoutBookDTOS.add(sectionWithoutBookDTO);
         });
         return sectionWithoutBookDTOS;
+    }
+
+    @Override
+    public SectionWithTestDTO getSectionWithTests(UUID sectionid) {
+        Optional<Section> optionalSection = sectionRepository.findById(sectionid);
+        if (optionalSection.isPresent()){
+            List<TestWithoutSectionDTO> testWithSectionId = testService.getTestWithSectionId(sectionid);
+            Section section = optionalSection.get();
+            SectionWithTestDTO sectionWithTestDTO = sectionMapper.mapSectionWithTestDTO(section, testWithSectionId);
+            return sectionWithTestDTO;
+        } else {
+            throw  new NullPointerException();
+        }
     }
 }
