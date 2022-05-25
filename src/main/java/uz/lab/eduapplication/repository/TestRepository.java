@@ -9,6 +9,6 @@ import java.util.List;
 import java.util.UUID;
 
 public interface TestRepository extends JpaRepository<Test, UUID> {
-    @Query(value = "select * from test where section = :sectionId",nativeQuery = true)
-    List<Test> findTestsByTestId(UUID testId);
+    @Query(value = "select * from test where section_id = :sectionId",nativeQuery = true)
+    List<Test> findTestsBySectionId(UUID sectionId);
 }

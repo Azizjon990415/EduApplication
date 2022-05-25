@@ -38,4 +38,5 @@ public class SectionController {
     public String deleteSection(@PathVariable UUID id){
         return sectionService.deleteSection(id);
     }
+
 }
