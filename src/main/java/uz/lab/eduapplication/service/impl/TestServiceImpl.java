@@ -3,10 +3,7 @@ package uz.lab.eduapplication.service.impl;
 import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import uz.lab.eduapplication.DTO.AnswerWithoutTestDTO;
-import uz.lab.eduapplication.DTO.QuestionWithoutTestDTO;
-import uz.lab.eduapplication.DTO.TestDTO;
-import uz.lab.eduapplication.DTO.TestQuestionAndAnswerDTO;
+import uz.lab.eduapplication.DTO.*;
 import uz.lab.eduapplication.domain.Answer;
 import uz.lab.eduapplication.domain.Question;
 import uz.lab.eduapplication.domain.Test;
@@ -89,6 +86,11 @@ public class TestServiceImpl implements TestService {
             List<QuestionWithoutTestDTO> questionWithoutTestDTOS = questionsByTestId.stream().map(questionMapper::mapQuestionDomainToQuestionWithoutTestDTO).collect(Collectors.toList());
             return testMapper.mapTestQuestionAndAnswerDTO(test,questionWithoutTestDTOS,answerWithoutTestDTOS);
         }).orElseThrow(NullPointerException::new);
+
+    }
+
+    @Override
+    public List<TestWithoutSectionDTO> getTestWithSectionId(UUID sectionId){
 
     }
 }

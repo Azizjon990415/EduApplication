@@ -2,10 +2,7 @@ package uz.lab.eduapplication.mapper;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
-import uz.lab.eduapplication.DTO.AnswerWithoutTestDTO;
-import uz.lab.eduapplication.DTO.QuestionWithoutTestDTO;
-import uz.lab.eduapplication.DTO.TestDTO;
-import uz.lab.eduapplication.DTO.TestQuestionAndAnswerDTO;
+import uz.lab.eduapplication.DTO.*;
 import uz.lab.eduapplication.domain.Question;
 import uz.lab.eduapplication.domain.Section;
 import uz.lab.eduapplication.domain.Test;
@@ -36,5 +33,9 @@ public class TestMapper {
 
     public TestQuestionAndAnswerDTO mapTestQuestionAndAnswerDTO(Test test, List<QuestionWithoutTestDTO> questionWithoutTestDTOS, List<AnswerWithoutTestDTO> answerWithoutTestDTOS){
         return  new TestQuestionAndAnswerDTO(test.getId().toString(), test.getOrd(), test.getScore(), questionWithoutTestDTOS, answerWithoutTestDTOS);
+    }
+
+    public TestWithoutSectionDTO mapTestWithoutSectionDTO(Test test) {
+        return new TestWithoutSectionDTO(test.getId().toString(), test.getOrd(), test.getScore());
     }
 }
