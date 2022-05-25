@@ -1,6 +1,8 @@
 package uz.lab.eduapplication.service;
 
 import uz.lab.eduapplication.DTO.SectionDTO;
+import uz.lab.eduapplication.DTO.SectionWithTestDTO;
+import uz.lab.eduapplication.domain.Section;
 
 import java.util.List;
 import java.util.UUID;
@@ -15,4 +17,6 @@ public interface SectionService {
     public SectionDTO editSection(SectionDTO sectionDTO);
 
     public String deleteSection(UUID id);
+
+    SectionWithTestDTO getSectionWithTests(UUID sectionid);
 }
